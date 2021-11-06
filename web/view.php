@@ -18,13 +18,13 @@ $username = "ismran";
 $password = "ismran123";
 $dbname="ismran_db";
 $conn=Connect($servername,$username,$password,$dbname);
-$sqlQuery="SELECT fileName from ismran_files";
+$sqlQuery="SELECT * from ismran_files";
 $results=$conn->query($sqlQuery);
 //echo $results."\n";
 if($results->num_rows > 0){
 while($row=$results->fetch_assoc()){
 //echo $row."\n";
-echo nl2br("FileName : ".$row["fileName"]."\n");
+echo nl2br("FileName : ".$row["hashCode"]."\n");
 //echo "raman <br/>";
 }
 }else{

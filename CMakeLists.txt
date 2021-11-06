@@ -26,5 +26,19 @@ include_directories(${MYSQL_INCLUDE_DIR})
 message(STATUS "mysql inc : ${MYSQL_INCLUDE_DIR}")
 include_directories(inc)
 
-add_executable(TestMysql test/TestMysql.cpp src/Database.cpp)
-target_link_libraries(TestMysql ${MYSQL_LIBRARIES})
+add_library(Dqm SHARED src/Database.cpp)
+target_link_libraries(Dqm ${MYSQL_LIBRARIES}) 
+
+add_executable(TestMysql test/TestMysql.cpp)
+target_link_libraries(TestMysql Dqm)
+
+#hadd_executable(TestTime test/TestTime.cpp )
+
+add_executable(Test_Cron_Hash_Copy test/Test_Cron_Hash_Copy.cpp)
+target_link_libraries(Test_Cron_Hash_Copy Dqm)
+
+add_executable(Test_Copy_From_Daq test/Test_Copy_From_Daq.cpp)
+target_link_libraries(Test_Copy_From_Daq Dqm)
+
+add_executable(Test_Integrity_Check test/Test_Integrity_Check.cpp)
+target_link_libraries(Test_Integrity_Check Dqm)

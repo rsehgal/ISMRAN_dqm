@@ -9,7 +9,7 @@
 #include <iostream>
 #include <mysql.h>
 #include <string>
-
+#include <vector>
 namespace ismran {
 
 class Database {
@@ -36,6 +36,13 @@ public:
   Database(std::string dbName, std::string uName, std::string passWd);
   int Connect();
 
+  /* Required Setters */
+  void Set(char *serverIp, char *dbName, char *uName, char *passWd);
+  void SetServerIp(char *serverIp);
+  void SetDbName(char *dbName);
+  void SetUname(char *uName);
+  void SetPasswd(char *passWd);
+
   template <bool select = false> int Query(std::string query);
 
   int Insert(std::string query);
@@ -48,6 +55,10 @@ public:
   int GetNumOfColumns(std::string tablename);
   int GetNumOfRows(std::string tablename);
   void PrintQueryOutput();
+  std::vector<std::vector<std::string>> GetVectorOfUnCopiedFiles();
+  void CalculateHashAndCopyFile(std::string sourcePath, std::string fileToCopy);
+  std::vector<std::vector<std::string>> GetVectorOfFiles_ForIntegrityCheck();
+  void DoIntegrityCheck(std::string targetPath, std::string fileToChec);
 
   // Function to set the fVERBOSE flag
   void SetVerbose(bool verbose);
@@ -64,8 +75,8 @@ template <bool select> int Database::Query(std::string query) {
   if (select) {
     res = mysql_store_result(conn);
 
-    if (fVerbose)
-      PrintQueryOutput();
+    //if (fVerbose)
+      //PrintQueryOutput();
   }
 }
 
