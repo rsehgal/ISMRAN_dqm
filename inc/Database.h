@@ -59,6 +59,7 @@ public:
   void CalculateHashAndCopyFile(std::string sourcePath, std::string fileToCopy);
   std::vector<std::vector<std::string>> GetVectorOfFiles_ForIntegrityCheck();
   void DoIntegrityCheck(std::string targetPath, std::string fileToChec);
+  std::vector<std::vector<std::string>> GetVectorOfDeletedFiles();
 
   // Function to set the fVERBOSE flag
   void SetVerbose(bool verbose);

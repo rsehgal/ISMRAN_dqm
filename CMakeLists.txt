@@ -28,6 +28,7 @@ include_directories(inc)
 
 add_library(Dqm SHARED src/Database.cpp)
 target_link_libraries(Dqm ${MYSQL_LIBRARIES}) 
+target_compile_features(Dqm PRIVATE cxx_std_17)
 
 add_executable(TestMysql test/TestMysql.cpp)
 target_link_libraries(TestMysql Dqm)
@@ -42,3 +43,6 @@ target_link_libraries(Test_Copy_From_Daq Dqm)
 
 add_executable(Test_Integrity_Check test/Test_Integrity_Check.cpp)
 target_link_libraries(Test_Integrity_Check Dqm)
+
+add_executable(TestFileExist test/TestFileExist.cpp)
+target_compile_features(TestFileExist PRIVATE cxx_std_17)
