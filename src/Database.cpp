@@ -5,6 +5,7 @@
 */
 
 #include "Database.h"
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -47,25 +48,17 @@ int Database::Connect() {
   }
 }
 
-void Database::Set(char *serverIp, char *dbName, char *uName, char *passWd){
-        fDbName = std::string(dbName);
-        fServerIp = std::string(serverIp);
-        fUsername = std::string(uName);
-        fPasswd = std::string(passWd);
+void Database::Set(char *serverIp, char *dbName, char *uName, char *passWd) {
+  fDbName = std::string(dbName);
+  fServerIp = std::string(serverIp);
+  fUsername = std::string(uName);
+  fPasswd = std::string(passWd);
 }
 
-void Database::SetServerIp(char *serverIp){
-        fServerIp = std::string(serverIp);
-}
-void Database::SetDbName(char *dbName){
-        fDbName = std::string(dbName);
-}
-void Database::SetUname(char *uName){
-        fUsername = std::string(uName);
-}
-void Database::SetPasswd(char *passWd){
-        fPasswd = std::string(passWd);
-}
+void Database::SetServerIp(char *serverIp) { fServerIp = std::string(serverIp); }
+void Database::SetDbName(char *dbName) { fDbName = std::string(dbName); }
+void Database::SetUname(char *uName) { fUsername = std::string(uName); }
+void Database::SetPasswd(char *passWd) { fPasswd = std::string(passWd); }
 
 int Database::Delete(std::string tablename) {
   std::string query = "DELETE FROM " + tablename;
@@ -110,6 +103,22 @@ void Database::PrintQueryOutput() {
               //<< std::setw(18) << row[3]
               << std::endl;
   }
+}
+std::vector<std::vector<std::string>> Database::GetVectorOfDeletedFiles() {
+  std::vector<std::vector<std::string>> vecOfVecOfFileNames;
+  Select("select * from ismran_files");
+  std::vector<std::string> vecOfFilePaths;
+  std::vector<std::string> vecOfFileNames;
+  while ((row = mysql_fetch_row(res)) != NULL) {
+    std::string fullFileName = std::string(row[0]) + "/" + std::string(row[1]);
+    if (std::filesystem::exists(fullFileName.c_str())) {
+      vecOfFilePaths.push_back(std::string(row[0]));
+      vecOfFileNames.push_back(std::string(row[1]));
+    }
+  }
+  vecOfVecOfFileNames.push_back(vecOfFilePaths);
+  vecOfVecOfFileNames.push_back(vecOfFileNames);
+  return vecOfVecOfFileNames;
 }
 
 std::vector<std::vector<std::string>> Database::GetVectorOfUnCopiedFiles() {
@@ -169,7 +178,7 @@ std::vector<std::vector<std::string>> Database::GetVectorOfFiles_ForIntegrityChe
 
 void Database::DoIntegrityCheck(std::string targetPath, std::string fileToCheck) {
   std::string fullFilePath = targetPath + "/" + fileToCheck;
-  //std::cout << "File for Integrity check : " << fullFilePath << std::endl;
+  // std::cout << "File for Integrity check : " << fullFilePath << std::endl;
   system(("sha256sum " + fullFilePath + " > sha.txt").c_str());
   std::ifstream inHashFile("sha.txt");
   std::string hashCode;
@@ -184,6 +193,7 @@ void Database::DoIntegrityCheck(std::string targetPath, std::string fileToCheck)
     }
   }
 }
+
 void Database::SetVerbose(bool verbose) { fVerbose = verbose; }
 
 } // namespace ismran
