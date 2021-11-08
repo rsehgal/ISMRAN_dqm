@@ -13,8 +13,20 @@ if ($conn->connect_error) {
 
 return $conn;
 }
-
-echo "<center><h2>ISMRAN Data Status</h2></center>";
+echo "<html><head><title>Ismran Data Status</title>
+<script>
+$(document).ready(function(){
+$('#searchButton').click(function(){
+alert($('#searchText').val());
+});
+});
+</script>
+</head>
+<body>";
+echo "<center><h2>ISMRAN Data Status</h2>";
+echo "<input type='date' name='searchText' id='searchText'> ";
+echo "<input type='button' value='Search' id='searchButton'/>";
+echo "</center><br/>";
 $servername = "127.0.0.1";
 //$username = "ismran";
 $username = "barcq";
@@ -49,5 +61,6 @@ echo "</tr>";
 echo "0 results";
 }
 echo "</table></center>";
+echo "</body></html>";
 $conn->close();
 ?> 
