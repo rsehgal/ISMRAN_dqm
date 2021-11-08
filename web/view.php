@@ -14,7 +14,9 @@ if ($conn->connect_error) {
 return $conn;
 }
 echo "<html><head><title>Ismran Data Status</title>
+<script src='js/jquery.js'></script>
 <script>
+
 $(document).ready(function(){
 $('#searchButton').click(function(){
 alert($('#searchText').val());
