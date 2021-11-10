@@ -111,7 +111,7 @@ std::vector<std::vector<std::string>> Database::GetVectorOfDeletedFiles() {
   std::vector<std::string> vecOfFileNames;
   while ((row = mysql_fetch_row(res)) != NULL) {
     std::string fullFileName = std::string(row[0]) + "/" + std::string(row[1]);
-    if (std::filesystem::exists(fullFileName.c_str())) {
+    if (!std::filesystem::exists(fullFileName.c_str())) {
       vecOfFilePaths.push_back(std::string(row[0]));
       vecOfFileNames.push_back(std::string(row[1]));
     }
@@ -119,6 +119,21 @@ std::vector<std::vector<std::string>> Database::GetVectorOfDeletedFiles() {
   vecOfVecOfFileNames.push_back(vecOfFilePaths);
   vecOfVecOfFileNames.push_back(vecOfFileNames);
   return vecOfVecOfFileNames;
+}
+
+void Database::UpdateDdForDeletedFile(){
+  std::vector<std::vector<std::string>> vecOfVecOfDeletedFileNames = GetVectorOfDeletedFiles();
+
+  std::string concatenatedFileName="";
+  for(unsigned int i = 0 ; i < vecOfVecOfDeletedFileNames[1].size() ; i++){
+	if(i==vecOfVecOfDeletedFileNames[1].size()-1)
+	concatenatedFileName+="'"+vecOfVecOfDeletedFileNames[1][i]+"'";
+	else
+	concatenatedFileName+="'"+vecOfVecOfDeletedFileNames[1][i]+"',";
+  }
+  std::cout << concatenatedFileName << std::endl;
+  std::string query = "update ismran_files set fileExistInSourceDir=0 where fileName IN (" + concatenatedFileName + ")";
+  Update(query);
 }
 
 std::vector<std::vector<std::string>> Database::GetVectorOfUnCopiedFiles() {

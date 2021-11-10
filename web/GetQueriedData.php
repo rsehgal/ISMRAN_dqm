@@ -6,12 +6,21 @@ $username = "ismran";
 $password = "ismran123";
 $dbname="ismran_db";
 
+$day=$_POST['day'];
+$month=$_POST['month'];
+$year=$_POST['year'];
+
+$queryDate=$day.$month.$year;
+echo "<center>";
+echo $queryDate."<br/><br/>";
+echo "</center>";
+
 $conn=Connect($servername,$username,$password,$dbname);
-$sqlQuery="SELECT * from ismran_files";
+$sqlQuery="SELECT * from ismran_files where fileName LIKE '%".$queryDate."%'";
 $results=$conn->query($sqlQuery);
 
 echo "<center><table border='1'>";
-echo "<tr bgcolor='yellow'><th>Source Path </th><th>Destination Path</th> <th>File Name</th>";
+echo "<tr bgcolor='yellow'><th>Source Path </th><th>Destination Path</th> <th>File Name</th><th>Calibration File </th>";
 //echo "<th>File Integrity</th>;
 echo "</tr>";
 if($results->num_rows > 0){
@@ -20,9 +29,13 @@ if($results->num_rows > 0){
 			echo "<tr bgcolor='#56de91'>";
 		else
 			echo "<tr>";
+		if($row['fileExistInSourceDir']==0)
+		echo "<td bgcolor='#ec7063'>".$row["filePath"]."</td>";
+		else
 		echo "<td>".$row["filePath"]."</td>";
 		echo "<td>".$row['remoteFilePath']."</td>";
 		echo "<td><a href='".$row['remoteFilePath']."/".$row['fileName']."'>".$row['fileName']."</a></td>";
+		echo "<td>".$row["calibrationTag"]."</td>";
 		echo "</tr>";
 	}
 }else{

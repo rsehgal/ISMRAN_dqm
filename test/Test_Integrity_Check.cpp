@@ -9,8 +9,8 @@
 int main() {
 
   // ismran::Database d; //Default constructor hardcode in the class
-  ismran::Database d("127.0.0.1", "barcq", "barcq", "barcq");
-  //ismran::Database d("127.0.0.1", "ismran_db", "ismran", "ismran123");
+  //ismran::Database d("127.0.0.1", "barcq", "barcq", "barcq");
+  ismran::Database d("127.0.0.1", "ismran_db", "ismran", "ismran123");
   d.SetVerbose(true);
   d.Connect();
   //std::string query = "select * from ismran_files";
