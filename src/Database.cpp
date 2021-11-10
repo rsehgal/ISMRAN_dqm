@@ -121,7 +121,7 @@ std::vector<std::vector<std::string>> Database::GetVectorOfDeletedFiles() {
   return vecOfVecOfFileNames;
 }
 
-void Database::UpdateDdForDeletedFile(){
+void Database::UpdateDbForDeletedFile(){
   std::vector<std::vector<std::string>> vecOfVecOfDeletedFileNames = GetVectorOfDeletedFiles();
 
   std::string concatenatedFileName="";
@@ -207,6 +207,17 @@ void Database::DoIntegrityCheck(std::string targetPath, std::string fileToCheck)
       Update(query);
     }
   }
+}
+
+void Database::UpdateDbForFileNames_Offline(std::string sourceDir){
+for (const auto & file : std::filesystem::directory_iterator(sourceDir)){
+	//To get the filename with full path
+	//std::cout << file.path() << std::endl;
+
+	//To get just the filename
+	//std::cout << std::filesystem::path(file.path()).filename() << std::endl;
+	InsertFileNameAndPath(sourceDir,std::filesystem::path(file.path()).filename());
+}
 }
 
 void Database::SetVerbose(bool verbose) { fVerbose = verbose; }

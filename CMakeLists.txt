@@ -44,9 +44,18 @@ target_link_libraries(Test_Copy_From_Daq Dqm)
 add_executable(Test_Integrity_Check test/Test_Integrity_Check.cpp)
 target_link_libraries(Test_Integrity_Check Dqm)
 
-add_executable(TestFileExist test/TestFileExist.cpp)
-target_compile_features(TestFileExist PRIVATE cxx_std_17)
-
 add_executable(Test_Update_Db_For_Deleted_Files test/Test_Update_Db_For_Deleted_Files.cpp)
 target_link_libraries(Test_Update_Db_For_Deleted_Files Dqm)
+
+add_executable(Test_Update_Db_For_Files_Offline test/Test_Update_Db_For_Files_Offline.cpp)
+target_link_libraries(Test_Update_Db_For_Files_Offline Dqm)
+
+
+#Core c++ test
+add_executable(TestFileExist test/core/TestFileExist.cpp)
+target_compile_features(TestFileExist PRIVATE cxx_std_17)
+
+add_executable(Test_List_Files_In_Directory test/core/Test_List_Files_In_Directory.cpp)
+target_compile_features(Test_List_Files_In_Directory PRIVATE cxx_std_17)
+#target_link_libraries(Test_List_Files_In_Directory Dqm)
 

@@ -60,7 +60,8 @@ public:
   std::vector<std::vector<std::string>> GetVectorOfFiles_ForIntegrityCheck();
   void DoIntegrityCheck(std::string targetPath, std::string fileToChec);
   std::vector<std::vector<std::string>> GetVectorOfDeletedFiles();
-  void UpdateDdForDeletedFile();
+  void UpdateDbForDeletedFile();
+  void UpdateDbForFileNames_Offline(std::string sourceDir);
   // Function to set the fVERBOSE flag
   void SetVerbose(bool verbose);
 };
@@ -76,8 +77,8 @@ template <bool select> int Database::Query(std::string query) {
   if (select) {
     res = mysql_store_result(conn);
 
-    //if (fVerbose)
-      //PrintQueryOutput();
+    // if (fVerbose)
+    // PrintQueryOutput();
   }
 }
 

@@ -18,7 +18,7 @@ int main(){
 	d.Connect();
   	//d.InsertFileNameAndPath("/home/rsehgal/ISMRAN_dqm/sourceDir","test1.txt");
   	//d.InsertFileNameAndPath("/home/rsehgal/ISMRAN_dqm/sourceDir","test2.txt");
-	d.UpdateDbForDeletedFile();
+	d.UpdateDbForFileNames_Offline("/home/rsehgal/DevShare");
 	return 0;
 
 }
