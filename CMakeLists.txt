@@ -46,3 +46,7 @@ target_link_libraries(Test_Integrity_Check Dqm)
 
 add_executable(TestFileExist test/TestFileExist.cpp)
 target_compile_features(TestFileExist PRIVATE cxx_std_17)
+
+add_executable(Test_Update_Db_For_Deleted_Files test/Test_Update_Db_For_Deleted_Files.cpp)
+target_link_libraries(Test_Update_Db_For_Deleted_Files Dqm)
+
