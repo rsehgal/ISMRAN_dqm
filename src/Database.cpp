@@ -121,15 +121,15 @@ std::vector<std::vector<std::string>> Database::GetVectorOfDeletedFiles() {
   return vecOfVecOfFileNames;
 }
 
-void Database::UpdateDbForDeletedFile(){
+void Database::UpdateDbForDeletedFile() {
   std::vector<std::vector<std::string>> vecOfVecOfDeletedFileNames = GetVectorOfDeletedFiles();
 
-  std::string concatenatedFileName="";
-  for(unsigned int i = 0 ; i < vecOfVecOfDeletedFileNames[1].size() ; i++){
-	if(i==vecOfVecOfDeletedFileNames[1].size()-1)
-	concatenatedFileName+="'"+vecOfVecOfDeletedFileNames[1][i]+"'";
-	else
-	concatenatedFileName+="'"+vecOfVecOfDeletedFileNames[1][i]+"',";
+  std::string concatenatedFileName = "";
+  for (unsigned int i = 0; i < vecOfVecOfDeletedFileNames[1].size(); i++) {
+    if (i == vecOfVecOfDeletedFileNames[1].size() - 1)
+      concatenatedFileName += "'" + vecOfVecOfDeletedFileNames[1][i] + "'";
+    else
+      concatenatedFileName += "'" + vecOfVecOfDeletedFileNames[1][i] + "',";
   }
   std::cout << concatenatedFileName << std::endl;
   std::string query = "update ismran_files set fileExistInSourceDir=0 where fileName IN (" + concatenatedFileName + ")";
@@ -138,7 +138,7 @@ void Database::UpdateDbForDeletedFile(){
 
 std::vector<std::vector<std::string>> Database::GetVectorOfUnCopiedFiles() {
   std::vector<std::vector<std::string>> vecOfVecOfFileNames;
-  Select("select * from ismran_files where copied=0");
+  Select("select * from ismran_files where copied=0 and currenFile=0");
   std::vector<std::string> vecOfFilePaths;
   std::vector<std::string> vecOfFileNames;
 
@@ -201,23 +201,52 @@ void Database::DoIntegrityCheck(std::string targetPath, std::string fileToCheck)
   inHashFile.close();
   std::string query = "select hashCode from ismran_files where fileName='" + fileToCheck + "'";
   Select(query);
+
+  std::cout << "======================================" << std::endl;
   while ((row = mysql_fetch_row(res)) != NULL) {
-    if (hashCode == std::string(row[0])) {
+    //std::cout << "Updating integrity check for : " << fileToCheck << std::endl;
+    //std::cout << "Target Hash Code : " << hashCode << std::endl;
+    std::cout << "Hash Code from DB : " << std::string(row[0]) << std::endl;
+    if (hashCode == std::string(row[0]) && hashCode != "") {
       query = "update ismran_files set integrityCheck=1 where fileName='" + fileToCheck + "'";
       Update(query);
     }
   }
 }
 
-void Database::UpdateDbForFileNames_Offline(std::string sourceDir){
-for (const auto & file : std::filesystem::directory_iterator(sourceDir)){
-	//To get the filename with full path
-	//std::cout << file.path() << std::endl;
+void Database::UpdateDbForFileNames_Offline(std::string sourceDir) {
+  for (const auto &file : std::filesystem::directory_iterator(sourceDir)) {
+    // To get the filename with full path
+    // std::cout << file.path() << std::endl;
 
-	//To get just the filename
-	//std::cout << std::filesystem::path(file.path()).filename() << std::endl;
-	InsertFileNameAndPath(sourceDir,std::filesystem::path(file.path()).filename());
+    // To get just the filename
+    // std::cout << std::filesystem::path(file.path()).filename() << std::endl;
+    InsertFileNameAndPath(sourceDir, std::filesystem::path(file.path()).filename());
+  }
 }
+
+std::string Database::GetShaSum(std::string fullFilePath) {
+  system(("sha256sum " + fullFilePath + " > sha.txt").c_str());
+  std::ifstream inHashFile("sha.txt");
+  std::string hashCode;
+  inHashFile >> hashCode;
+  inHashFile.close();
+  return hashCode;
+}
+
+void Database::UpdateDbForTargetFiles_Cron_Offline(std::string targetDir) {
+  for (const auto &file : std::filesystem::directory_iterator(targetDir)) {
+
+    std::string filename = std::filesystem::path(file.path()).filename();
+    std::string query = "select * from ismran_files where fileName='" + filename + "' and copied=0";
+    Select(query);
+    while ((row = mysql_fetch_row(res)) != NULL) {
+      std::string hashCode = GetShaSum(std::string(row[0]) + "/" + std::string(row[1]));
+      query = "UPDATE ismran_files SET hashCode='" + hashCode + "', copied=1, remoteFilePath='" + targetDir +
+              "' where fileName='" + filename + "'";
+      Update(query);
+    }
+  }
 }
 
 void Database::SetVerbose(bool verbose) { fVerbose = verbose; }

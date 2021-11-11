@@ -1,10 +1,10 @@
 /*
-**	Filename : Test_Update_Db_For_Deleted_Files.cpp
-**	2021-11-10
+**	Filename : Test_Update_Db_For_Cron_Offline.cpp
+**	2021-11-11
 **	username : rsehgal
 */
 /*
-** This needs to be run time to time by cron, to update Database for deleted files
+** This needs to be run only when offline update needs to be done
 */
 
 #include<iostream>
@@ -18,8 +18,8 @@ int main(int argc, char *argv[]){
 	d.Connect();
   	//d.InsertFileNameAndPath("/home/rsehgal/ISMRAN_dqm/sourceDir","test1.txt");
   	//d.InsertFileNameAndPath("/home/rsehgal/ISMRAN_dqm/sourceDir","test2.txt");
-	//d.UpdateDbForFileNames_Offline("/home/rsehgal/DevShare");
-	d.UpdateDbForFileNames_Offline(argv[1]);
+	//d.UpdateDbForTargetFiles_Cron_Offline("/media/rsehgal/BACKUP/dqm_test");
+	d.UpdateDbForTargetFiles_Cron_Offline(argv[1]);
 	return 0;
 
 }

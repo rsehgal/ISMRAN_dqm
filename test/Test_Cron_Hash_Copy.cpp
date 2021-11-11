@@ -10,7 +10,7 @@
 int main() {
 
   // ismran::Database d; //Default constructor hardcode in the class
-  //ismran::Database d("127.0.0.1", "barcq", "barcq", "barcq");
+  // ismran::Database d("127.0.0.1", "barcq", "barcq", "barcq");
   ismran::Database d("127.0.0.1", "ismran_db", "ismran", "ismran123");
   d.SetVerbose(true);
   d.Connect();
@@ -20,22 +20,20 @@ int main() {
   // ('/home/rsehgal/test2','test2.root',0,'8908jkjjlkjl',1)"; d.Insert(insertQuery); d.Select(query);
 
   std::cout << "-----------Files to Copy ----------------" << std::endl;
-  std::vector<std::vector<std::string>> vecOfVecOfUncopiedFiles=d.GetVectorOfUnCopiedFiles();
-  
-  for(unsigned int i = 0 ; i < vecOfVecOfUncopiedFiles[0].size() ; i++){
- 	std::string fullName=vecOfVecOfUncopiedFiles[0][i]+"/"+vecOfVecOfUncopiedFiles[1][i];
-	//std::cout << vecOfUncopiedFiles[i] << std::endl;
+  std::vector<std::vector<std::string>> vecOfVecOfUncopiedFiles = d.GetVectorOfUnCopiedFiles();
 
-		std::cout << "--------------- Calculating Hash and Copying file -----------------------" << std::endl;
-	d.CalculateHashAndCopyFile(vecOfVecOfUncopiedFiles[0][i],vecOfVecOfUncopiedFiles[1][i]);
-	std::cout << fullName << std::endl;
-  } 
+  for (unsigned int i = 0; i < vecOfVecOfUncopiedFiles[0].size(); i++) {
+    std::string fullName = vecOfVecOfUncopiedFiles[0][i] + "/" + vecOfVecOfUncopiedFiles[1][i];
+    // std::cout << vecOfUncopiedFiles[i] << std::endl;
 
-  //d.InsertFileNameAndPath("/home/rsehgal/test3", "test3.root");
-  //d.Select(query);
+    std::cout << "--------------- Calculating Hash and Copying file -----------------------" << std::endl;
+    d.CalculateHashAndCopyFile(vecOfVecOfUncopiedFiles[0][i], vecOfVecOfUncopiedFiles[1][i]);
+    std::cout << fullName << std::endl;
+  }
 
-  
-  
+  // d.InsertFileNameAndPath("/home/rsehgal/test3", "test3.root");
+  // d.Select(query);
+
   /*
   int numOfRecords = d.GetNumOfRows("scatteringdata");
   std::cout<<"Num of Records : " << numOfRecords << std::endl;

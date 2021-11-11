@@ -50,6 +50,8 @@ target_link_libraries(Test_Update_Db_For_Deleted_Files Dqm)
 add_executable(Test_Update_Db_For_Files_Offline test/Test_Update_Db_For_Files_Offline.cpp)
 target_link_libraries(Test_Update_Db_For_Files_Offline Dqm)
 
+add_executable(Test_Update_Db_For_Cron_Offline test/Test_Update_Db_For_Cron_Offline.cpp)
+target_link_libraries(Test_Update_Db_For_Cron_Offline Dqm)
 
 #Core c++ test
 add_executable(TestFileExist test/core/TestFileExist.cpp)

@@ -61,7 +61,14 @@ public:
   void DoIntegrityCheck(std::string targetPath, std::string fileToChec);
   std::vector<std::vector<std::string>> GetVectorOfDeletedFiles();
   void UpdateDbForDeletedFile();
+
+
+  std::string GetShaSum(std::string filename);
+
+  //Functions for offline processing for already existing files
   void UpdateDbForFileNames_Offline(std::string sourceDir);
+  void UpdateDbForTargetFiles_Cron_Offline(std::string sourceDir);
+
   // Function to set the fVERBOSE flag
   void SetVerbose(bool verbose);
 };
