@@ -5,10 +5,18 @@
 */
 
 #include "Database.h"
-#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+
+#ifdef EXPERIMENTAL_FILESYSTEM
+#include <experimental/filesystem>
+namespace FS=std::experimental::filesystem;
+#else
+#include <filesystem>
+namespace FS=std::filesystem;
+#endif
+
 namespace ismran {
 
 Database::Database() {
@@ -111,7 +119,7 @@ std::vector<std::vector<std::string>> Database::GetVectorOfDeletedFiles() {
   std::vector<std::string> vecOfFileNames;
   while ((row = mysql_fetch_row(res)) != NULL) {
     std::string fullFileName = std::string(row[0]) + "/" + std::string(row[1]);
-    if (!std::filesystem::exists(fullFileName.c_str())) {
+    if (!FS::exists(fullFileName.c_str())) {
       vecOfFilePaths.push_back(std::string(row[0]));
       vecOfFileNames.push_back(std::string(row[1]));
     }
@@ -215,13 +223,13 @@ void Database::DoIntegrityCheck(std::string targetPath, std::string fileToCheck)
 }
 
 void Database::UpdateDbForFileNames_Offline(std::string sourceDir) {
-  for (const auto &file : std::filesystem::directory_iterator(sourceDir)) {
+  for (const auto &file : FS::directory_iterator(sourceDir)) {
     // To get the filename with full path
     // std::cout << file.path() << std::endl;
 
     // To get just the filename
-    // std::cout << std::filesystem::path(file.path()).filename() << std::endl;
-    InsertFileNameAndPath(sourceDir, std::filesystem::path(file.path()).filename());
+    // std::cout << FS::path(file.path()).filename() << std::endl;
+    InsertFileNameAndPath(sourceDir, FS::path(file.path()).filename());
   }
 }
 
@@ -235,9 +243,9 @@ std::string Database::GetShaSum(std::string fullFilePath) {
 }
 
 void Database::UpdateDbForTargetFiles_Cron_Offline(std::string targetDir) {
-  for (const auto &file : std::filesystem::directory_iterator(targetDir)) {
+  for (const auto &file : FS::directory_iterator(targetDir)) {
 
-    std::string filename = std::filesystem::path(file.path()).filename();
+    std::string filename = FS::path(file.path()).filename();
     std::string query = "select * from ismran_files where fileName='" + filename + "' and copied=0";
     Select(query);
     while ((row = mysql_fetch_row(res)) != NULL) {

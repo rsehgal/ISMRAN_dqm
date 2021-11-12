@@ -11,7 +11,16 @@
 
 using std::cout; using std::cin;
 using std::endl; using std::string;
-using std::filesystem::directory_iterator;
+
+#ifdef EXPERIMENTAL_FILESYSTEM
+#include <experimental/filesystem>
+namespace FS=std::experimental::filesystem;
+#else
+#include <filesystem>
+namespace FS=std::filesystem;
+#endif
+
+using FS::directory_iterator;
 
 int main() {
     string path = "/home/rsehgal/DevShare";
