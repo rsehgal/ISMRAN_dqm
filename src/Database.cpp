@@ -184,7 +184,7 @@ void Database::CalculateHashAndCopyFile(std::string sourcePath, std::string file
 
 std::vector<std::vector<std::string>> Database::GetVectorOfFiles_ForIntegrityCheck() {
   std::vector<std::vector<std::string>> vecOfVecOfFileNames;
-  Select("select * from ismran_files where integrityCheck=0");
+  Select("select * from ismran_files where integrityCheck=0 and copied=1");
   std::vector<std::string> vecOfFilePaths;
   std::vector<std::string> vecOfFileNames;
 
