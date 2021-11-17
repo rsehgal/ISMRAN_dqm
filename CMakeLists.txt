@@ -37,7 +37,7 @@ include_directories(${MYSQL_INCLUDE_DIR})
 message(STATUS "mysql inc : ${MYSQL_INCLUDE_DIR}")
 include_directories(inc)
 
-add_library(Dqm SHARED src/Database.cpp)
+add_library(Dqm SHARED src/Database.cpp src/Helpers.cpp)
 if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 8.0)
 target_link_libraries(Dqm ${MYSQL_LIBRARIES}) 
 target_compile_features(Dqm PRIVATE cxx_std_17)
@@ -75,6 +75,10 @@ target_link_libraries(TestFileExist Dqm) #stdc++fs)
 
 add_executable(Test_List_Files_In_Directory test/core/Test_List_Files_In_Directory.cpp)
 target_link_libraries(Test_List_Files_In_Directory Dqm)
+
+add_executable(Test_Tokenizing test/core/Test_Tokenizing.cpp)
+target_link_libraries(Test_Tokenizing Dqm)
+
 #target_compile_features(Test_List_Files_In_Directory PRIVATE cxx_std_17)
 #target_link_libraries(Test_List_Files_In_Directory Dqm)
 

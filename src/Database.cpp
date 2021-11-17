@@ -8,7 +8,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-
+#include "Helpers.h"
 #ifdef EXPERIMENTAL_FILESYSTEM
 #include <experimental/filesystem>
 namespace FS=std::experimental::filesystem;
@@ -200,7 +200,8 @@ std::vector<std::vector<std::string>> Database::GetVectorOfFiles_ForIntegrityChe
 }
 
 void Database::DoIntegrityCheck(std::string targetPath, std::string fileToCheck) {
-  std::string fullFilePath = targetPath + "/" + fileToCheck;
+  //std::string fullFilePath = targetPath + "/" + fileToCheck;
+  std::string fullFilePath = GetAmbarMountPoint_ParentDir()+GetPath_StartingFromMountPoint(targetPath)+"/"+fileToCheck;
   // std::cout << "File for Integrity check : " << fullFilePath << std::endl;
   system(("sha256sum " + fullFilePath + " > sha.txt").c_str());
   std::ifstream inHashFile("sha.txt");
