@@ -8,7 +8,7 @@ function Connect($servername,$username,$password,$dbname){
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	}
-	echo nl2br("Connected successfully\n");
+	//echo nl2br("Connected successfully\n");
 
 	return $conn;
 }

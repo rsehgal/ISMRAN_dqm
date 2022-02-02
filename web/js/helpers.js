@@ -45,4 +45,32 @@ $(document).ready(function(){
 				      );
 		});
 
+		$('#loggedMessages').load("GetLoggedMessages.php");
+		
+		$('#loadElog').click(function(event){
+			event.preventDefault();
+			$('#newMessage').show();
+			$('#newMessage').load("elog.php");
+			$('#loggedMessages').hide();
+		});
+
+		/*$("form").submit(function (event) {
+		    event.preventDefault();
+		    var formData = {
+		      name: $("#name").val(),
+		      msg: $("#msg").val(),
+		    };
+
+		    $.ajax({
+		      type: "POST",
+		      url: "StoreFormData.php",
+		      data: formData,
+		      dataType: "json",
+		      encode: true,
+		    }).done(function (data) {
+		      console.log(data);
+		    });
+
+		  });*/
+
 }); 
