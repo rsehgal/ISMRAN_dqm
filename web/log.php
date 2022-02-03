@@ -4,7 +4,7 @@
 <script src='js/helpers.js'></script>
 </head>
 <?php
-echo "<center><a href='' id='loadElog' name='loadElog'> <b><font color='red'>Enter a new log message</font></b></center></a>";
+echo "<br/><center><h2>ELog</h2><a href='' id='loadElog' name='loadElog'> <b><font color='red'>Enter a new log message</font></b></center></a>";
 echo "<br/>";
 echo "<center>";
 echo "<div id='newMessage' name='newMessage'></div>";

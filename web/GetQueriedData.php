@@ -37,6 +37,9 @@ if($results->num_rows > 0){
 		echo "<td>".$row["filePath"]."</td>";
 		echo "<td>".$row['remoteFilePath']."</td>";
 		$hrefPath=GetSubStringFromTokenIndex($row['remoteFilePath'],2);
+		if($row["currenFile"]==1 && $row["currenFile"])
+                echo "<td class='blink'><b><font color='red'>".$row['fileName']."</font></b></td>";
+                else
 		echo "<td><a href='.".$hrefPath."/".$row['fileName']."'>".$row['fileName']."</a></td>";
 		//echo "<td><a href='".$row['remoteFilePath']."/".$row['fileName']."'>".$row['fileName']."</a></td>";
 		echo "<td>".$row["calibrationTag"]."</td>";
