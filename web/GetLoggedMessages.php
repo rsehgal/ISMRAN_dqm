@@ -6,6 +6,11 @@ $('.updateButton').click(function (event) {
                     var formData = {
                       name: $("#name_"+$(this).attr("id")).val(),
                       msg: $("#msg_"+$(this).attr("id")).val(),
+                      neartemp: $("#neartemp_"+$(this).attr("id")).val(),
+                      fartemp: $("#fartemp_"+$(this).attr("id")).val(),
+                      ambtemp: $("#ambtemp_"+$(this).attr("id")).val(),
+                      ambpressure: $("#ambpressure_"+$(this).attr("id")).val(),
+                      ambhumidity: $("#ambhumidity_"+$(this).attr("id")).val(),
                       id: $(this).attr("id"),
                       update:1
                     };
@@ -62,17 +67,22 @@ $results=$conn->query($sqlQuery);
 //echo "<center><a href='elog.php'> <b><font color='red'>Enter a new log message</font></b></center></a>";
 //echo "<br/>";
 echo "<center><table border='1'>";
-echo "<tr bgcolor='yellow'><th>Reported By </th><th>Log Message</th> <th>Date Time</th>";
+echo "<tr bgcolor='yellow'><th>Log Message </th><th> Near<br/> Temperature </th> <th>Far <br/> Temperature </th> <th>Ambient <br/> Temperature </th> <th>Ambient <br/> Pressure</th> <th>Ambient <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";
 echo "</tr>";
 if($results->num_rows > 0){
 	
 	while($row=$results->fetch_assoc()){
 		$id=$row['logid'];
 		echo "<tr>";
-		echo "<td><input type='text' id='name_$id' name='name_$id' value='".$row['name']."'/></td> 
-		      <td><textarea id='msg_$id' name='msg_$id' rows='4' cols='50' >".$row['message']."</textarea></td> 
-		      <td><input type='text' id='datetime_$id' name='datetime_$id' value='".$row['ts']."'/></td>
-		      <td><input type='button' class='updateButton' id=$id name=$id value='Update' /></td>";
+		echo "<td><textarea id='msg_$id' name='msg_$id' rows='4' cols='50' >".$row['message']."</textarea></td>"; 
+		echo "<td><input type='text' id='neartemp_$id' name='neartemp_$id' size=5      value='".$row['neartemp']."'/></td>"; 
+		echo "<td><input type='text' id='fartemp_$id' name='fartemp_$id'  size=5       value='".$row['fartemp']."'/></td>"; 
+		echo "<td><input type='text' id='ambtemp_$id' name='ambtemp_$id'  size=5       value='".$row['ambtemp']."'/></td>"; 
+		echo "<td><input type='text' id='ambpressure_$id' name='ambpressure_$id' size=5  value='".$row['ambpressure']."'/></td>"; 
+		echo "<td><input type='text' id='ambhumidity_$id' name='ambhumidity_$id' size=5 value='".$row['ambhumidity']."'/></td>"; 
+		echo "<td><input type='text' id='datetime_$id' name='datetime_$id' size=10 value='".$row['ts']."'/></td>";
+		echo "<td><input type='text' id='name_$id' name='name_$id' size=10 value='".$row['name']."'/></td>";
+		echo "<td><input type='button' class='updateButton' id=$id name=$id value='Update' /></td>";
 		echo "</tr>";
 		
 	}

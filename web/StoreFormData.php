@@ -10,6 +10,11 @@ $dbname="ismran_db";
 $name=$_POST['name'];
 $msg=$_POST['msg'];
 $id=$_POST['id'];
+$neartemp=$_POST['neartemp'];
+$fartemp=$_POST['fartemp'];
+$ambtemp=$_POST['ambtemp'];
+$ambpressure=$_POST['ambpressure'];
+$ambhumidity=$_POST['ambhumidity'];
 //$name=$_POST['name_'.$id];
 //$msg=$_POST['msg_'.$id];
 
@@ -19,9 +24,9 @@ echo $name." : ".$msg."<br/>";
 $conn=Connect($servername,$username,$password,$dbname);
 if($update==1){
 //$sqlQuery="update elog set name='$name',message='$msg',ts=NOW(),dt=NOW() where logid=$id";
-$sqlQuery="update elog set name='$name',message='$msg',ts=NOW(),dt=NOW() where logid=$id";
+$sqlQuery="update elog set name='$name',message='$msg',ts=NOW(),dt=NOW(),neartemp=$neartemp,fartemp=$fartemp,ambtemp=$ambtemp,ambpressure=$ambpressure,ambhumidity=$ambhumidity where logid=$id";
 $results=$conn->query($sqlQuery);
-$sqlQuery="INSERT into elog_history (name,ts,dt,message,logid )values('$name',NOW(),NOW(),'$msg',$id) ";
+$sqlQuery="INSERT into elog_history (name,ts,dt,message,logid,neartemp,fartemp,ambtemp,ambpressure,ambhumidity )values('$name',NOW(),NOW(),'$msg',$id,$neartemp,$fartemp,$ambtemp,$ambpressure,$ambhumidity) ";
 $results=$conn->query($sqlQuery);
 
 }
