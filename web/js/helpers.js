@@ -54,23 +54,4 @@ $(document).ready(function(){
 			$('#loggedMessages').hide();
 		});
 
-		/*$("form").submit(function (event) {
-		    event.preventDefault();
-		    var formData = {
-		      name: $("#name").val(),
-		      msg: $("#msg").val(),
-		    };
-
-		    $.ajax({
-		      type: "POST",
-		      url: "StoreFormData.php",
-		      data: formData,
-		      dataType: "json",
-		      encode: true,
-		    }).done(function (data) {
-		      console.log(data);
-		    });
-
-		  });*/
-
 }); 

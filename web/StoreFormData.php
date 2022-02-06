@@ -9,14 +9,29 @@ $dbname="ismran_db";
 
 $name=$_POST['name'];
 $msg=$_POST['msg'];
+$id=$_POST['id'];
+//$name=$_POST['name_'.$id];
+//$msg=$_POST['msg_'.$id];
 
-//echo $name." : ".$msg."<br/>";
+$update=$_POST['update'];
+echo "ID : $id : Update : $update <br/>";
+echo $name." : ".$msg."<br/>";
 $conn=Connect($servername,$username,$password,$dbname);
-$sqlQuery="INSERT into elog (name,ts,dt,message )values('$name',NOW(),NOW(),'$msg') ";
-//echo $sqlQuery."<br/>";
-echo "Message Logged successfully. <br/>";
+if($update==1){
+//$sqlQuery="update elog set name='$name',message='$msg',ts=NOW(),dt=NOW() where logid=$id";
+$sqlQuery="update elog set name='$name',message='$msg',ts=NOW(),dt=NOW() where logid=$id";
 $results=$conn->query($sqlQuery);
-/*
+$sqlQuery="INSERT into elog_history (name,ts,dt,message,logid )values('$name',NOW(),NOW(),'$msg',$id) ";
+$results=$conn->query($sqlQuery);
+
+}
+else{
+$sqlQuery="INSERT into elog (name,ts,dt,message )values('$name',NOW(),NOW(),'$msg') ";
+$results=$conn->query($sqlQuery);
+}
+//echo $sqlQuery."<br/>";
+//echo "Message Logged successfully. <br/>";
+
 echo "<center><table border='1'>";
 echo "<tr bgcolor='yellow'><th>Source Path </th><th>Destination Path</th> <th>File Name</th><th>Calibration File </th>";
 //echo "<th>File Integrity</th>;
@@ -45,7 +60,7 @@ if($results->num_rows > 0){
 }
 echo "</table></center>";
 echo "</body></html>";
-*/
+
 $conn->close();
 
 ?>
