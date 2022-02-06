@@ -31,7 +31,9 @@ $results=$conn->query($sqlQuery);
 
 }
 else{
-$sqlQuery="INSERT into elog (name,ts,dt,message )values('$name',NOW(),NOW(),'$msg') ";
+//$sqlQuery="INSERT into elog (name,ts,dt,message )values('$name',NOW(),NOW(),'$msg') ";
+$sqlQuery="INSERT into elog (name,ts,dt,message,neartemp,fartemp,ambtemp,ambpressure,ambhumidity )values('$name',NOW(),NOW(),'$msg',$neartemp,$fartemp,$ambtemp,$ambpressure,$ambhumidity) ";
+echo $sqlQuery;
 $results=$conn->query($sqlQuery);
 }
 //echo $sqlQuery."<br/>";

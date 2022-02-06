@@ -10,6 +10,12 @@ $("form").submit(function (event) {
                     var formData = {
                       name: $("#name").val(),
                       msg: $("#msg").val(),
+		      neartemp:$('#neartemp').val(),
+		      fartemp:$('#fartemp').val(),
+		      ambtemp:$('#ambtemp').val(),
+		      ambpressure:$('#ambpressure').val(),
+		      ambhumidity:$('#ambhumidity').val(),
+
                     };
 
                     $.ajax({
@@ -26,6 +32,14 @@ $("form").submit(function (event) {
 		    $('#loggedMessages').show();
 		    $('#loggedMessages').load("GetLoggedMessages.php");
                   });
+
+$(document).ready(function(){
+
+	$('#tempPresHumi').click(function(){
+	alert("Temp Press Humi Clicked....");
+	$('#temp-pres-humi').load("GetTempPresHumiTable.php");
+	});
+});
 
 </script>
 
@@ -49,6 +63,19 @@ echo "<tr>";
 echo "<td></td>";
 echo "<td>";
 echo "<textarea id='msg' name='msg' rows='4' placeholder='Enter your Log message' cols='50'></textarea>";
+echo "</td>";
+echo "</tr>";
+
+echo "<tr></tr>";
+
+echo "<tr>";
+echo "<td>";
+echo "Temperature <br> Pressure 
+<input type='checkbox' id='tempPresHumi' name='tempPresHumi'/>
+<br/> Humidity";
+echo "</td>";
+echo "<td>";
+echo "<div id='temp-pres-humi' name='temp-pres-humi'></div>";
 echo "</td>";
 echo "</tr>";
 
