@@ -3,20 +3,44 @@
 ISMRAN ELog
 </title>
 <head>
-<script src='js/jquery.js'></script>
+<!-- <script src='js/jquery.js'></script>-->
+<script src='js/jquery.min.js'></script>
+<script src='js/helpers.js'></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/bootstrap.min.js"></script>
+<style>
+.form-control:focus {
+    border-color: purple;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255, 100, 255, 0.5);
+}
+</style>
 <script>
 $("form").submit(function (event) {
                     event.preventDefault();
-                    var formData = {
-                      name: $("#name").val(),
-                      msg: $("#msg").val(),
-		      neartemp:$('#neartemp').val(),
-		      fartemp:$('#fartemp').val(),
-		      ambtemp:$('#ambtemp').val(),
-		      ambpressure:$('#ambpressure').val(),
-		      ambhumidity:$('#ambhumidity').val(),
+		    if($('#tempPresHumi').is(":checked")){
+			    var formData = {
+			      name: $("#name").val(),
+			      msg: $("#msg").val(),
+			      neartemp:$('#neartemp').val(),
+			      fartemp:$('#fartemp').val(),
+			      ambtemp:$('#ambtemp').val(),
+			      ambpressure:$('#ambpressure').val(),
+			      ambhumidity:$('#ambhumidity').val(),
 
-                    };
+			    };
+		    }else{
+				alert("Checkbox not selected....");
+			    var formData = {
+			      name: $("#name").val(),
+			      msg: $("#msg").val(),
+			      neartemp:0,
+			      fartemp:0,
+			      ambtemp:0,
+			      ambpressure:0,
+			      ambhumidity:0,
+
+			    };
+		    }
 
                     $.ajax({
                       type: "POST",
@@ -36,19 +60,33 @@ $("form").submit(function (event) {
 $(document).ready(function(){
 
 	$('#tempPresHumi').click(function(){
-	alert("Temp Press Humi Clicked....");
+	//alert("Temp Press Humi Clicked....");
 	$('#temp-pres-humi').load("GetTempPresHumiTable.php");
+	if($('#tempPresHumi').is(":checked")){
+	$('#temp-pres-humi').show();
+	}else{
+	$('#temp-pres-humi').hide();
+	}
 	});
 });
 
 </script>
 
+<style>
+.my-text-area:focus{
+    border-color: red;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255, 100, 255, 0.5);
+}
+</style>
+
+</style>
+
 </head>
 <body>
 <?php
 echo "<form id='elog_form' method='POST' action='StoreFormData.php'>";
-echo "<table border='0'>";
-echo "<tr>";
+echo "<table class='table table-hover table-condensed table-bordered table-dark' border='0'>";
+echo "<tr class='success'>";
 echo "<td>";
 //echo "<label for='name' id='label_name'>Your Name*</label>";
 echo "Your Name*";
@@ -59,16 +97,16 @@ echo "<input type='text' name='name' id='name' placeholder='Your Name' required>
 echo "</td>";
 echo "</tr>";
 
-echo "<tr>";
+echo "<tr class='success'>";
 echo "<td></td>";
 echo "<td>";
-echo "<textarea id='msg' name='msg' rows='4' placeholder='Enter your Log message' cols='50'></textarea>";
+echo "<textarea id='msg' name='msg' class='form-control' rows='4' placeholder='Enter your Log message' cols='50'></textarea>";
 echo "</td>";
 echo "</tr>";
 
-echo "<tr></tr>";
+echo "<tr class='success'></tr>";
 
-echo "<tr>";
+echo "<tr class='success'>";
 echo "<td>";
 echo "Temperature <br> Pressure 
 <input type='checkbox' id='tempPresHumi' name='tempPresHumi'/>
@@ -79,10 +117,10 @@ echo "<div id='temp-pres-humi' name='temp-pres-humi'></div>";
 echo "</td>";
 echo "</tr>";
 
-echo "<tr>";
+echo "<tr class='success'>";
 echo "<td></td>";
 echo "<td>";
-echo "<input type='submit' id='submit'></input>";
+echo "<input type='submit' id='submit' class='btn-primary'></input>";
 echo "</td>";
 echo "</tr>";
 

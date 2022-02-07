@@ -1,7 +1,7 @@
 <script>
 $('.updateButton').click(function (event) {
 //$('#raman').click(function (event) {
-                    alert("updateButton click");
+                    //alert("updateButton click");
                     //event.preventDefault();
                     var formData = {
                       name: $("#name_"+$(this).attr("id")).val(),
@@ -66,23 +66,24 @@ $results=$conn->query($sqlQuery);
 
 //echo "<center><a href='elog.php'> <b><font color='red'>Enter a new log message</font></b></center></a>";
 //echo "<br/>";
-echo "<center><table border='1'>";
-echo "<tr bgcolor='yellow'><th>Log Message </th><th> Near<br/> Temperature </th> <th>Far <br/> Temperature </th> <th>Ambient <br/> Temperature </th> <th>Ambient <br/> Pressure</th> <th>Ambient <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";
+echo "<center><table border='1' class='table table-hover table-condensed table-bordered table-dark'>";
+//echo "<tr bgcolor='yellow'><th>Log Message </th><th> Near<br/> Temperature </th> <th>Far <br/> Temperature </th> <th>Ambient <br/> Temperature </th> <th>Ambient <br/> Pressure</th> <th>Ambient <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";
+echo "<tr class='warning'><th>Log Message </th><th> Near<br/> Temperature </th> <th>Far <br/> Temperature </th> <th>Ambient <br/> Temperature </th> <th>Ambient <br/> Pressure</th> <th>Ambient <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";
 echo "</tr>";
 if($results->num_rows > 0){
 	
 	while($row=$results->fetch_assoc()){
 		$id=$row['logid'];
-		echo "<tr>";
-		echo "<td><textarea id='msg_$id' name='msg_$id' rows='4' cols='50' >".$row['message']."</textarea></td>"; 
-		echo "<td><input type='text' id='neartemp_$id' name='neartemp_$id' size=5      value='".$row['neartemp']."'/></td>"; 
-		echo "<td><input type='text' id='fartemp_$id' name='fartemp_$id'  size=5       value='".$row['fartemp']."'/></td>"; 
-		echo "<td><input type='text' id='ambtemp_$id' name='ambtemp_$id'  size=5       value='".$row['ambtemp']."'/></td>"; 
-		echo "<td><input type='text' id='ambpressure_$id' name='ambpressure_$id' size=5  value='".$row['ambpressure']."'/></td>"; 
-		echo "<td><input type='text' id='ambhumidity_$id' name='ambhumidity_$id' size=5 value='".$row['ambhumidity']."'/></td>"; 
-		echo "<td><input type='text' id='datetime_$id' name='datetime_$id' size=10 value='".$row['ts']."'/></td>";
-		echo "<td><input type='text' id='name_$id' name='name_$id' size=10 value='".$row['name']."'/></td>";
-		echo "<td><input type='button' class='updateButton' id=$id name=$id value='Update' /></td>";
+		echo "<tr class='success'>";
+		echo "<td><textarea id='msg_$id' class='form-control' name='msg_$id' rows='4' cols='50' >".$row['message']."</textarea></td>"; 
+		echo "<td><input type='text' class='btn form-control' id='neartemp_$id' name='neartemp_$id' size=5      value='".$row['neartemp']."'/></td>"; 
+		echo "<td><input type='text' class='btn form-control' id='fartemp_$id' name='fartemp_$id'  size=5       value='".$row['fartemp']."'/></td>"; 
+		echo "<td><input type='text' class='btn form-control' id='ambtemp_$id' name='ambtemp_$id'  size=5       value='".$row['ambtemp']."'/></td>"; 
+		echo "<td><input type='text' class='btn form-control' id='ambpressure_$id' name='ambpressure_$id' size=5  value='".$row['ambpressure']."'/></td>"; 
+		echo "<td><input type='text' class='btn form-control' id='ambhumidity_$id' name='ambhumidity_$id' size=5 value='".$row['ambhumidity']."'/></td>"; 
+		echo "<td><input type='text' class='btn form-control' id='datetime_$id' name='datetime_$id' size=10 value='".$row['ts']."'/></td>";
+		echo "<td><input type='text' class='btn form-control' id='name_$id' name='name_$id' size=10 value='".$row['name']."'/></td>";
+		echo "<td><input type='button' class='updateButton btn-primary' id=$id name=$id value='Update' /></td>";
 		echo "</tr>";
 		
 	}
