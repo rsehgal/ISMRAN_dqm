@@ -1,4 +1,21 @@
 <script>
+$(document).ready(function() {
+	$("#success-alert").hide();
+	//$("#success-newLogMessage").hide();
+});
+$('.updateButton').click(function() {
+	//alert("updateButton click");
+	$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+	$("#success-alert").slideUp(500);
+});
+});
+/*$('form').click(function() {
+	//alert("updateButton click");
+	$("#success-newLogMessage").fadeTo(5000, 500).slideUp(5000, function(){
+	$("#success-newLogMessage").slideUp(5000);
+});
+});*/
+
 $('.updateButton').click(function (event) {
 //$('#raman').click(function (event) {
                     //alert("updateButton click");
@@ -66,6 +83,15 @@ $results=$conn->query($sqlQuery);
 
 //echo "<center><a href='elog.php'> <b><font color='red'>Enter a new log message</font></b></center></a>";
 //echo "<br/>";
+echo '<div class="alert alert-success" id="success-alert">
+  <button type="button" class="close" data-dismiss="alert">x</button>
+  <strong>Data updated !! </strong> 
+</div>';
+/*echo '<div class="alert alert-success" id="success-newLogMessage">
+  <button type="button" class="close" data-dismiss="alert">x</button>
+  <strong>Log Entry saved successfully !! </strong> 
+</div>';
+*/
 echo "<center><table border='1' class='table table-hover table-condensed table-bordered table-dark'>";
 //echo "<tr bgcolor='yellow'><th>Log Message </th><th> Near<br/> Temperature </th> <th>Far <br/> Temperature </th> <th>Ambient <br/> Temperature </th> <th>Ambient <br/> Pressure</th> <th>Ambient <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";
 echo "<tr class='warning'><th>Log Message </th><th> Near<br/> Temperature </th> <th>Far <br/> Temperature </th> <th>Ambient <br/> Temperature </th> <th>Ambient <br/> Pressure</th> <th>Ambient <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";

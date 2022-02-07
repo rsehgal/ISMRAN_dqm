@@ -14,6 +14,8 @@ ISMRAN ELog
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255, 100, 255, 0.5);
 }
 </style>
+
+
 <script>
 $("form").submit(function (event) {
                     event.preventDefault();
@@ -29,7 +31,7 @@ $("form").submit(function (event) {
 
 			    };
 		    }else{
-				alert("Checkbox not selected....");
+				//alert("Checkbox not selected....");
 			    var formData = {
 			      name: $("#name").val(),
 			      msg: $("#msg").val(),
@@ -54,11 +56,15 @@ $("form").submit(function (event) {
 
 		    $('#newMessage').hide();
 		    $('#loggedMessages').show();
+		    $("#success-newLogMessage").fadeTo(2000, 500).slideUp(500, function(){
+        	    $("#success-newLogMessage").slideUp(500);
+		    });
 		    $('#loggedMessages').load("GetLoggedMessages.php");
+
                   });
 
 $(document).ready(function(){
-
+	$('#success-newLogMessage').hide();
 	$('#tempPresHumi').click(function(){
 	//alert("Temp Press Humi Clicked....");
 	$('#temp-pres-humi').load("GetTempPresHumiTable.php");
@@ -84,6 +90,12 @@ $(document).ready(function(){
 </head>
 <body>
 <?php
+/*echo '<div class="alert alert-success" id="success-newLogMessage">
+  <button type="button" class="close" data-dismiss="alert">x</button>
+  <strong>Log Entry saved successfully !! </strong> 
+</div>';*/
+
+
 echo "<form id='elog_form' method='POST' action='StoreFormData.php'>";
 echo "<table class='table table-hover table-condensed table-bordered table-dark' border='0'>";
 echo "<tr class='success'>";
