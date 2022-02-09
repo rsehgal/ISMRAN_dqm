@@ -62,7 +62,7 @@ $('.updateButton').click(function (event) {
 include "helpers.php";
 
 //$servername = "127.0.0.1";
-$servername = "localhost";// "10.44.11.130";
+$servername = "10.44.11.130";
 $username = "ismran";
 $password = "ismran123";
 $dbname="ismran_db";
@@ -77,8 +77,8 @@ echo $queryDate."<br/><br/>";
 echo "</center>";*/
 
 $conn=Connect($servername,$username,$password,$dbname);
-//$sqlQuery="SELECT * from elog order by ts DESC";
-$sqlQuery="SELECT * from elog order by logid DESC";
+$sqlQuery="SELECT * from elog order by ts DESC";
+//$sqlQuery="SELECT * from elog order by logid DESC";
 $results=$conn->query($sqlQuery);
 
 //echo "<center><a href='elog.php'> <b><font color='red'>Enter a new log message</font></b></center></a>";

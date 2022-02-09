@@ -2,7 +2,7 @@
 include "helpers.php";
 
 //$servername = "127.0.0.1";
-$servername = "localhost";// "10.44.11.130";
+$servername = "10.44.11.130";
 $username = "ismran";
 $password = "ismran123";
 $dbname="ismran_db";
@@ -24,7 +24,7 @@ echo $name." : ".$msg."<br/>";
 $conn=Connect($servername,$username,$password,$dbname);
 if($update==1){
 //$sqlQuery="update elog set name='$name',message='$msg',ts=NOW(),dt=NOW() where logid=$id";
-$sqlQuery="update elog set name='$name',message='$msg',ts=NOW(),dt=NOW(),neartemp=$neartemp,fartemp=$fartemp,ambtemp=$ambtemp,ambpressure=$ambpressure,ambhumidity=$ambhumidity where logid=$id";
+$sqlQuery="update elog set name='$name',message='$msg',dt=NOW(),neartemp=$neartemp,fartemp=$fartemp,ambtemp=$ambtemp,ambpressure=$ambpressure,ambhumidity=$ambhumidity where logid=$id";
 $results=$conn->query($sqlQuery);
 $sqlQuery="INSERT into elog_history (name,ts,dt,message,logid,neartemp,fartemp,ambtemp,ambpressure,ambhumidity )values('$name',NOW(),NOW(),'$msg',$id,$neartemp,$fartemp,$ambtemp,$ambpressure,$ambhumidity) ";
 $results=$conn->query($sqlQuery);
