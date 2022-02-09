@@ -62,7 +62,8 @@ $('.updateButton').click(function (event) {
 include "helpers.php";
 
 //$servername = "127.0.0.1";
-$servername = "10.44.11.130";
+//$servername = "10.44.11.130";
+$servername = "localhost";
 $username = "ismran";
 $password = "ismran123";
 $dbname="ismran_db";
@@ -94,7 +95,7 @@ echo '<div class="alert alert-success" id="success-alert">
 */
 echo "<center><table border='1' class='table table-hover table-condensed table-bordered table-dark'>";
 //echo "<tr bgcolor='yellow'><th>Log Message </th><th> Near<br/> Temperature </th> <th>Far <br/> Temperature </th> <th>Ambient <br/> Temperature </th> <th>Ambient <br/> Pressure</th> <th>Ambient <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";
-echo "<tr class='warning'><th>Log Message </th><th> Near<br/> Temperature </th> <th>Far <br/> Temperature </th> <th>Ambient <br/> Temperature </th> <th>Ambient <br/> Pressure</th> <th>Ambient <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";
+echo "<tr class='warning'><th>Log Message </th><th> Near (<sup>o</sup>C)<br/> Temperature <br/></th> <th>Far (<sup>o</sup>C)<br/> Temperature </th> <th>Ambient(<sup>o</sup>C) <br/> Temperature </th> <th>Ambient(mB) <br/> Pressure</th> <th>Ambient(%) <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";
 echo "</tr>";
 if($results->num_rows > 0){
 	
