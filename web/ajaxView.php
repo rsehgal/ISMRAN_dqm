@@ -8,7 +8,15 @@
 $(document).ready(function(){
 	var today = GetTodaysDate();
 	$('#searchText').attr('value',today);
+	$('#hiddenSearchDate').attr('value',$('#searchText').val());
+	$('#hiddenStoreDate').attr('value',$('#searchText').val());
 	GetDataOnClick();
+
+	$('#searchButton').click(function(){
+		$('#hiddenSearchDate').attr('value',$('#searchText').val());
+		$('#hiddenStoreDate').attr('value',$('#searchText').val());
+        	GetDataOnClick();
+        });
 });
 </script>
 </head>

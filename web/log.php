@@ -19,6 +19,7 @@
 <script>
 $(document).ready(function(){
         $('#success-newLogMessage').hide();
+	GetELogPage();
 });
 
 </script>

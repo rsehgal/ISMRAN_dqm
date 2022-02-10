@@ -10,7 +10,7 @@ function GetTodaysDate(){
 }
 function GetMonthName(monthNumber) {
 
-		var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		return months[monthNumber - 1];
 
 }
@@ -40,20 +40,54 @@ function GetDataOnClick(){
                                                 //$.getScript('js/custom.js');
                                                 }}
                                       );
+		$('#elogDiv').show();
+		$('#elogDiv').load("log.php");
+		//$('#loggedMessages').show();
+		//$('#loggedMessages').load("GetLoggedMessages.php");
+		//$('#loggedMessages').load("GetLoggedMessages.php?searchFor="+todaysDate);
+
                 }
-$(document).ready(function(){
-	
-		$('#searchButton').click(function(){
-				GetDataOnClick();
-		});
 
-		$('#loggedMessages').load("GetLoggedMessages.php");
-		
-		$('#loadElog').click(function(event){
-			event.preventDefault();
-			$('#newMessage').show();
-			$('#newMessage').load("elog.php");
-			$('#loggedMessages').hide();
-		});
+function GetELogPage(){
+	//$('#newMessage').show();
+	$('#loadElog').click(function(event){
+		event.preventDefault();
+		GetElogNewEntryForm()
+	});
 
-}); 
+	//var today = GetTodaysDate();
+	//alert("Today : "+today );
+	var searchDate = $('#searchText').val();
+	//var hiddenSearchDate = $('#hiddenSearchDate').val();
+	$('#loggedMessages').show();
+	//$('#loggedMessages').load("GetLoggedMessages.php?searchFor="+today);
+	var urlLink="GetLoggedMessages.php";
+	var form_data = new FormData();
+	//alert("HiddenSearchData from GetELogPage : "+$('#hiddenSearchDate').val());
+	//alert("HiddenStoreData from GetELogPage : "+$('#hiddenStoreDate').val());
+	form_data.append("hiddenStoreDate",$('#hiddenStoreDate').val());
+	form_data.append("hiddenSearchDate",$('#hiddenSearchDate').val());
+	//form_data.append("searchFor",today);
+
+	$.ajax({url: urlLink,
+		cache:false,
+		type:'post',
+		data:form_data,
+		processData: false,
+		contentType: false,
+		success: function(result){
+		$('#loggedMessages').html(result)
+		//console.log(result);
+		//$.getScript('js/custom.js');
+		}
+	       }
+	);
+}
+
+function GetElogNewEntryForm(){
+	$('#newMessage').show();
+	$('#newMessage').load("elog.php");
+	//$('#loggedMessages').hide();
+
+}
+

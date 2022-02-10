@@ -1,8 +1,8 @@
 <?php
 include "helpers.php";
 
-//$servername = "127.0.0.1";
-$servername = "10.44.11.130";
+$servername = "127.0.0.1";
+//$servername = "10.44.11.130";
 $username = "ismran";
 $password = "ismran123";
 $dbname="ismran_db";
@@ -15,6 +15,8 @@ $fartemp=$_POST['fartemp'];
 $ambtemp=$_POST['ambtemp'];
 $ambpressure=$_POST['ambpressure'];
 $ambhumidity=$_POST['ambhumidity'];
+$hiddenSearchDate=$_POST['hiddenSearchDate'];
+$hiddenStoreDate=$_POST['hiddenStoreDate'];
 //$name=$_POST['name_'.$id];
 //$msg=$_POST['msg_'.$id];
 
@@ -32,7 +34,11 @@ $results=$conn->query($sqlQuery);
 }
 else{
 //$sqlQuery="INSERT into elog (name,ts,dt,message )values('$name',NOW(),NOW(),'$msg') ";
+/*if($hiddenSearchDate=="DEF")
 $sqlQuery="INSERT into elog (name,ts,dt,message,neartemp,fartemp,ambtemp,ambpressure,ambhumidity )values('$name',NOW(),NOW(),'$msg',$neartemp,$fartemp,$ambtemp,$ambpressure,$ambhumidity) ";
+else
+$sqlQuery="INSERT into elog (name,ts,dt,message,neartemp,fartemp,ambtemp,ambpressure,ambhumidity )values('$name','$hiddenSearchDate',NOW(),'$msg',$neartemp,$fartemp,$ambtemp,$ambpressure,$ambhumidity) ";*/
+$sqlQuery="INSERT into elog (name,ts,dt,message,neartemp,fartemp,ambtemp,ambpressure,ambhumidity )values('$name','$hiddenStoreDate',NOW(),'$msg',$neartemp,$fartemp,$ambtemp,$ambpressure,$ambhumidity) ";
 echo $sqlQuery;
 $results=$conn->query($sqlQuery);
 }

@@ -68,6 +68,8 @@ $username = "ismran";
 $password = "ismran123";
 $dbname="ismran_db";
 
+$searchStoreDate=$_POST['hiddenStoreDate'];
+$hiddenSearchDate=$_POST['hiddenSearchDate'];
 /*$day=$_POST['day'];
 $month=$_POST['month'];
 $year=$_POST['year'];
@@ -78,7 +80,11 @@ echo $queryDate."<br/><br/>";
 echo "</center>";*/
 
 $conn=Connect($servername,$username,$password,$dbname);
+$sqlQuery="";
+if($hiddenSearchDate=="DEF")
 $sqlQuery="SELECT * from elog order by ts DESC";
+else
+$sqlQuery="SELECT * from elog where ts like '%$hiddenSearchDate%' order by ts DESC";
 //$sqlQuery="SELECT * from elog order by logid DESC";
 $results=$conn->query($sqlQuery);
 
@@ -93,6 +99,9 @@ echo '<div class="alert alert-success" id="success-alert">
   <strong>Log Entry saved successfully !! </strong> 
 </div>';
 */
+
+//echo "<center>Searched For : $searchFor</center>";
+
 echo "<center><table border='1' class='table table-hover table-condensed table-bordered table-dark'>";
 //echo "<tr bgcolor='yellow'><th>Log Message </th><th> Near<br/> Temperature </th> <th>Far <br/> Temperature </th> <th>Ambient <br/> Temperature </th> <th>Ambient <br/> Pressure</th> <th>Ambient <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";
 echo "<tr class='warning'><th>Log Message </th><th> Near (<sup>o</sup>C)<br/> Temperature <br/></th> <th>Far (<sup>o</sup>C)<br/> Temperature </th> <th>Ambient(<sup>o</sup>C) <br/> Temperature </th> <th>Ambient(mB) <br/> Pressure</th> <th>Ambient(%) <br/> Humidity</th> <th>Date Time</th> <th>Reported By</th> <th></th>";

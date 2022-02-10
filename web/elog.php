@@ -19,6 +19,7 @@ ISMRAN ELog
 <script>
 $("form").submit(function (event) {
                     event.preventDefault();
+		    //alert("Date to be set for hidden text : "+$('#hiddenSearchDate').val());
 		    if($('#tempPresHumi').is(":checked")){
 			    var formData = {
 			      name: $("#name").val(),
@@ -28,7 +29,8 @@ $("form").submit(function (event) {
 			      ambtemp:$('#ambtemp').val(),
 			      ambpressure:$('#ambpressure').val(),
 			      ambhumidity:$('#ambhumidity').val(),
-
+			      hiddenSearchDate:$('#hiddenSearchDate').val(),	
+			      hiddenStoreDate:$('#hiddenStoreDate').val(),	
 			    };
 		    }else{
 				//alert("Checkbox not selected....");
@@ -40,7 +42,8 @@ $("form").submit(function (event) {
 			      ambtemp:0,
 			      ambpressure:0,
 			      ambhumidity:0,
-
+			      hiddenSearchDate:$('#hiddenSearchDate').val(),	
+			      hiddenStoreDate:$('#hiddenStoreDate').val(),	
 			    };
 		    }
 
@@ -73,6 +76,10 @@ $(document).ready(function(){
 	}else{
 	$('#temp-pres-humi').hide();
 	}
+	});
+
+	$('#hideButton').click(function(){
+		$('#newMessage').hide();
 	});
 });
 
@@ -133,6 +140,8 @@ echo "<tr class='success'>";
 echo "<td></td>";
 echo "<td>";
 echo "<input type='submit' id='submit' class='btn-primary'></input>";
+echo "&nbsp;&nbsp&nbsp&nbsp";
+echo "<input type='button' id='hideButton' name='hideButton' value='Hide' class='btn-warning'></input>";
 echo "</td>";
 echo "</tr>";
 
