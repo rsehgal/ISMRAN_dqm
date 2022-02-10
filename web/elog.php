@@ -19,6 +19,7 @@ ISMRAN ELog
 <script>
 $("form").submit(function (event) {
                     event.preventDefault();
+		    alert($('#hiddenSearchDate').val()+" : "+$('#hiddenSearchDate').val());
 		    //alert("Date to be set for hidden text : "+$('#hiddenSearchDate').val());
 		    if($('#tempPresHumi').is(":checked")){
 			    var formData = {
@@ -62,7 +63,21 @@ $("form").submit(function (event) {
 		    $("#success-newLogMessage").fadeTo(2000, 500).slideUp(500, function(){
         	    $("#success-newLogMessage").slideUp(500);
 		    });
-		    $('#loggedMessages').load("GetLoggedMessages.php");
+		    //$('#loggedMessages').load("GetLoggedMessages.php");
+		    var urlLink = "GetLoggedMessages.php";
+		    $.ajax({url: urlLink,
+				cache:false,
+				type:'post',
+				data:form_data,
+				processData: false,
+				contentType: false,
+				success: function(result){
+				$('#loggedMessages').html(result)
+				//console.log(result);
+				//$.getScript('js/custom.js');
+				}}
+                     );
+
 
                   });
 

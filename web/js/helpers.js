@@ -52,7 +52,9 @@ function GetELogPage(){
 	//$('#newMessage').show();
 	$('#loadElog').click(function(event){
 		event.preventDefault();
-		GetElogNewEntryForm()
+		GetElogNewEntryForm();
+		//alert("HiddenSearchData from GetELogPage : "+$('#hiddenSearchDate').val());
+	        //alert("HiddenStoreData from GetELogPage : "+$('#hiddenStoreDate').val());
 	});
 
 	//var today = GetTodaysDate();
