@@ -19,7 +19,7 @@ ISMRAN ELog
 <script>
 $("form").submit(function (event) {
                     event.preventDefault();
-		    alert($('#hiddenSearchDate').val()+" : "+$('#hiddenSearchDate').val());
+		    //alert($('#hiddenSearchDate').val()+" : "+$('#hiddenSearchDate').val());
 		    //alert("Date to be set for hidden text : "+$('#hiddenSearchDate').val());
 		    if($('#tempPresHumi').is(":checked")){
 			    var formData = {

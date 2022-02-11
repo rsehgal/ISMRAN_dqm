@@ -62,8 +62,8 @@ $('.updateButton').click(function (event) {
 include "helpers.php";
 
 //$servername = "127.0.0.1";
-//$servername = "10.44.11.130";
-$servername = "localhost";
+$servername = "10.44.11.130";
+//$servername = "localhost";
 $username = "ismran";
 $password = "ismran123";
 $dbname="ismran_db";
