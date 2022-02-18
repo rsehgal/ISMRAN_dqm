@@ -6,8 +6,8 @@ $servername = "10.44.11.130";
 $username = "ismran";
 $password = "ismran123";
 $dbname="ismran_db";
-
 $day=$_POST['day'];
+$day=sprintf("%02d", $day);
 $month=$_POST['month'];
 $year=$_POST['year'];
 

@@ -52,16 +52,28 @@ $('#dataStatusDiv').show();
 //$(this).css("background-color","#04AA6D");
 
 $('#dataStatusDiv').load("ajaxView.php");
-$('#elogDiv').hide();
-});
-$("#elogLink").click(function(event){
-event.preventDefault();
 $('#elogDiv').show();
 $('#elogDiv').load("log.php");
-$('#dataStatusDiv').hide();
+//$('#elogDiv').hide();
+});
+$("#elogLink").click(function(event){
+	
+	event.preventDefault();
+	//alert("Settign value to DEF..");
+	$('#hiddenSearchDate').attr('value','DEF');
+	$('#hiddenStoreDate').attr('value',GetTodaysDate());
+	//alert("sEtting search Text to : "+GetTodaysDate());
+	//$('#searchText').show();
+	//$('#searchText').attr('value',GetTodaysDate());
+	//alert("Hidden Search Date value : "+$('#hiddenSearchDate').val());
+	//alert("Hidden Store Date value : "+$('#hiddenStoreDate').val());
+	$('#elogDiv').show();
+	$('#elogDiv').load("log.php");
+	$('#dataStatusDiv').hide();
 });
 
 });
+
 </script>
 </head>
 <body>
@@ -73,6 +85,7 @@ $('#dataStatusDiv').hide();
 
 <div id="dataStatusDiv" name="dataStatusDiv"></div>
 <div id="elogDiv" name="elogDiv"></div>
-
+<input type="hidden" id="hiddenSearchDate" name="hiddenSearchDate" value="DEF" />
+<input type="hidden" id="hiddenStoreDate" name="hiddenStoreDate" value="DEF" />
 </body>
 </html>
