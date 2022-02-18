@@ -25,4 +25,47 @@ function GetSubStringFromTokenIndex($str,$tokenIndex){
         }
         return $outputStr;
 }
+
+function GetSubStringFromDelimiter($str,$delim,$delimIndex){
+	$parts = explode($delim, $str);
+
+	$result = "";
+
+	if (count($parts) >= $delimIndex+1) {
+		for($i=$delimIndex ; $i<count($parts);$i++)
+		if($i==$delimIndex)
+			$result.=$parts[$i];
+		else
+			$result.=$delim.$parts[$i];
+			
+	}
+	return $result;
+}
+function GetSubStringUptoLastDelimiter($str,$delim){
+	$parts = explode($delim, $str);
+
+	$result = "";
+
+	if (count($parts) >= $delimIndex+1) {
+		for($i=0 ; $i<count($parts)-2;$i++)
+		if($i==$delimIndex)
+			$result.=$parts[$i];
+		else
+			$result.=$delim.$parts[$i];
+			
+	}
+	return $result;
+}
+function GetFileNameWithoutExtension($str){
+	$parts = explode('.',$str);
+	return $parts[0];
+}
+function GetFileExtension($str){
+	$parts = explode('.',$str);
+	return $parts[count($parts)-1];
+}
+function GetFileExtensionWithDelim($str,$delim){
+	$parts = explode($delim,$str);
+	return $parts[count($parts)-1];
+}
 ?>
