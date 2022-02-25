@@ -58,6 +58,7 @@ public:
   std::vector<std::vector<std::string>> GetVectorOfUnCopiedFiles();
   void CalculateHashAndCopyFile(std::string sourcePath, std::string fileToCopy);
   std::vector<std::vector<std::string>> GetVectorOfFiles_ForIntegrityCheck();
+  std::vector<std::vector<std::string>> GetVectorOfFiles_ForSinglePointCalibration();
   void DoIntegrityCheck(std::string targetPath, std::string fileToChec);
   std::vector<std::vector<std::string>> GetVectorOfDeletedFiles();
   void UpdateDbForDeletedFile();

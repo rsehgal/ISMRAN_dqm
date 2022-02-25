@@ -37,7 +37,7 @@ include_directories(${MYSQL_INCLUDE_DIR})
 message(STATUS "mysql inc : ${MYSQL_INCLUDE_DIR}")
 include_directories(inc)
 
-add_library(Dqm SHARED src/Database.cpp src/Helpers.cpp)
+add_library(Dqm SHARED src/Database.cpp src/Helpers_Dqm.cpp)
 if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 8.0)
 target_link_libraries(Dqm ${MYSQL_LIBRARIES}) 
 target_compile_features(Dqm PRIVATE cxx_std_17)
