@@ -33,4 +33,12 @@ std::string GetPath_StartingFromMountPoint(std::string pathString) {
 
 std::string GetAmbarMountPoint_ParentDir() { return "/var/www/html/web"; }
 
+std::string GetRemoteDataDirectory_OnDAQMachine() {
+  std::ifstream infile("/home/rsehgal/Softwares/ISMRAN_dqm/files/copyPath.txt");
+  std::string copyPath;
+  infile >> copyPath;
+  infile.close();
+  return copyPath;
+}
+
 } // namespace ismran

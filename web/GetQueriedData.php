@@ -1,6 +1,17 @@
 <?php
 include "helpers.php";
 
+echo  "<script>
+        $(document).ready(function(){
+                $('.popper').click(function (event) {
+                        event.preventDefault();
+                        var href = $(this).attr('href');
+                        window.open(href, 'popup', 'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,height=400,width=600');
+                });
+        });
+        </script>";
+
+
 //$servername = "127.0.0.1";
 $servername = "10.44.11.130";
 $username = "ismran";
@@ -21,7 +32,7 @@ $sqlQuery="SELECT * from ismran_files where fileName LIKE '%".$queryDate."%'";
 $results=$conn->query($sqlQuery);
 
 echo "<center><table border='1'>";
-echo "<tr bgcolor='yellow'><th>Source Path </th><th>Destination Path</th> <th>File Name</th><th>Calibration File </th>";
+echo "<tr bgcolor='yellow'><th>Source Path </th><th>Destination Path</th> <th>File Name</th> <th>Near <br/> Rates</th><th>Far <br/> Rates</th><th>Coinc <br/> Rates</th> <th>Calibration File </th>";
 //echo "<th>File Integrity</th>;
 echo "</tr>";
 if($results->num_rows > 0){
@@ -42,6 +53,14 @@ if($results->num_rows > 0){
                 else
 		echo "<td><a href='.".$hrefPath."/".$row['fileName']."'>".$row['fileName']."</a></td>";
 		//echo "<td><a href='".$row['remoteFilePath']."/".$row['fileName']."'>".$row['fileName']."</a></td>";
+		$substring = GetSubStringFromDelimiter($row['fileName'],'_',2);
+		$substring = GetFileNameWithoutExtension($substring);
+		$substring.='.png';
+		//$hrefPathForPng=GetSubStringUptoLastDelimiter($row['remoteFilePath'],'/')."/image";
+		$hrefPathForPng=GetSubStringUptoLastDelimiter($hrefPath,'/')."/images";
+		echo "<td><a href='."."$hrefPathForPng/NearRate_$substring' class='popper'>Plot</a></td>";
+		echo "<td><a href='."."$hrefPathForPng/FarRate_$substring' class='popper'>Plot</a></td>";
+		echo "<td><a href='."."$hrefPathForPng/CoincRate_$substring' class='popper'>Plot</a></td>";
 		echo "<td>".$row["calibrationTag"]."</td>";
 		echo "</tr>";
 	}

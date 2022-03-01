@@ -163,10 +163,11 @@ std::vector<std::vector<std::string>> Database::GetVectorOfUnCopiedFiles() {
 
 void Database::CalculateHashAndCopyFile(std::string sourcePath, std::string fileToCopy) {
   std::string fullFilePath = sourcePath + "/" + fileToCopy;
-  std::ifstream infile("../files/copyPath.txt");
+  /*std::ifstream infile("../files/copyPath.txt");
   std::string copyPath;
   infile >> copyPath;
-  infile.close();
+  infile.close();*/
+  std::string copyPath = GetRemoteDataDirectory_OnDAQMachine();
   system(("sha256sum " + fullFilePath + " > sha.txt").c_str());
   std::ifstream inHashFile("sha.txt");
   std::string hashCode;

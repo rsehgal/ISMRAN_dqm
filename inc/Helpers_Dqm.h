@@ -12,5 +12,6 @@ namespace ismran {
 extern std::vector<std::string> GetStringTokens(std::string pathString,char delim='/');
 extern std::string GetPath_StartingFromMountPoint(std::string pathString);
 extern std::string GetAmbarMountPoint_ParentDir();
+extern std::string GetRemoteDataDirectory_OnDAQMachine();
 } // namespace ismran
 #endif
