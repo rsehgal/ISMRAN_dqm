@@ -8,7 +8,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include "Helpers.h"
+#include "Helpers_Dqm.h"
 #ifdef EXPERIMENTAL_FILESYSTEM
 #include <experimental/filesystem>
 namespace FS=std::experimental::filesystem;
@@ -163,16 +163,39 @@ std::vector<std::vector<std::string>> Database::GetVectorOfUnCopiedFiles() {
 
 void Database::CalculateHashAndCopyFile(std::string sourcePath, std::string fileToCopy) {
   std::string fullFilePath = sourcePath + "/" + fileToCopy;
-  std::ifstream infile("../files/copyPath.txt");
+  /*std::ifstream infile("../files/copyPath.txt");
   std::string copyPath;
   infile >> copyPath;
-  infile.close();
+  infile.close();*/
+  std::string copyPath = GetRemoteDataDirectory_OnDAQMachine();
   system(("sha256sum " + fullFilePath + " > sha.txt").c_str());
   std::ifstream inHashFile("sha.txt");
   std::string hashCode;
   inHashFile >> hashCode;
   inHashFile.close();
   system(("cp " + fullFilePath + " " + copyPath).c_str());
+
+  std::string fullImageTargetFilePath = GetCopyPath_UptoMonth(copyPath)+"/images";
+  std::string fullImageSourceFilePrefix=sourcePath+"/images/";
+  std::string imageFileSuffix = GetPath_StartingFrom_DelimiterWithIndex(fileToCopy,'_',1);
+  imageFileSuffix = GetStringToken_WithIndex(imageFileSuffix,'.',0); 
+  imageFileSuffix += ".png";
+  std::string imageName = "NearRate"+imageFileSuffix;
+  std::string fullImageSourceFilePath = fullImageSourceFilePrefix+imageName;
+
+  if(FileExists(fullImageSourceFilePath))  
+    system(("cp "+fullImageSourceFilePath+" "+fullImageTargetFilePath).c_str());
+
+  imageName = "FarRate"+imageFileSuffix;
+  fullImageSourceFilePath = fullImageSourceFilePrefix+imageName;
+  if(FileExists(fullImageSourceFilePath))  
+    system(("cp "+fullImageSourceFilePath+" "+fullImageTargetFilePath).c_str());
+
+  imageName = "CoincRate"+imageFileSuffix;
+  fullImageSourceFilePath = fullImageSourceFilePrefix+imageName;
+  if(FileExists(fullImageSourceFilePath))  
+    system(("cp "+fullImageSourceFilePath+" "+fullImageTargetFilePath).c_str());
+
   std::string query = "update ismran_files set copied=1 where fileName='" + fileToCopy + "'";
   Update(query);
   query = "update ismran_files set hashCode='" + hashCode + "' where fileName='" + fileToCopy + "'";
@@ -190,6 +213,24 @@ std::vector<std::vector<std::string>> Database::GetVectorOfFiles_ForIntegrityChe
 
   while ((row = mysql_fetch_row(res)) != NULL) {
     vecOfFilePaths.push_back(std::string(row[6]));
+    vecOfFileNames.push_back(std::string(row[1]));
+
+    // vecOfFileNames.push_back(std::string(row[0]) + "/" + std::string(row[1]));
+  }
+  vecOfVecOfFileNames.push_back(vecOfFilePaths);
+  vecOfVecOfFileNames.push_back(vecOfFileNames);
+  return vecOfVecOfFileNames;
+}
+
+std::vector<std::vector<std::string>> Database::GetVectorOfFiles_ForSinglePointCalibration() {
+  std::vector<std::vector<std::string>> vecOfVecOfFileNames;
+  Select("select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=0");
+  //Select("select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=0 and fileName like '%02Feb%' ");
+  std::vector<std::string> vecOfFilePaths;
+  std::vector<std::string> vecOfFileNames;
+
+  while ((row = mysql_fetch_row(res)) != NULL) {
+    vecOfFilePaths.push_back(std::string(row[0]));
     vecOfFileNames.push_back(std::string(row[1]));
 
     // vecOfFileNames.push_back(std::string(row[0]) + "/" + std::string(row[1]));
