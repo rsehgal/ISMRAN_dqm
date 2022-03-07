@@ -3,8 +3,8 @@
 **	2021-11-16
 **	username : rsehgal
 */
-#ifndef Helpers_h
-#define Helpers_h
+#ifndef Helpers_Dqm_h
+#define Helpers_Dqm_h
 
 #include <string>
 #include <vector>
@@ -17,5 +17,7 @@ extern std::string GetCopyPath_UptoMonth(std::string pathString);
 extern std::string GetAmbarMountPoint_ParentDir();
 extern std::string GetRemoteDataDirectory_OnDAQMachine();
 extern bool FileExists (const std::string& name);
+extern std::string GetFileNameWithoutExtension(std::string filename);
 } // namespace ismran
+
 #endif

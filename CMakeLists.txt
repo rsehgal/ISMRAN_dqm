@@ -79,6 +79,9 @@ target_link_libraries(Test_List_Files_In_Directory Dqm)
 add_executable(Test_Tokenizing test/core/Test_Tokenizing.cpp)
 target_link_libraries(Test_Tokenizing Dqm)
 
+add_executable(TestFileName test/core/TestFileName.cpp)
+target_link_libraries(TestFileName Dqm)
+
 #target_compile_features(Test_List_Files_In_Directory PRIVATE cxx_std_17)
 #target_link_libraries(Test_List_Files_In_Directory Dqm)
 

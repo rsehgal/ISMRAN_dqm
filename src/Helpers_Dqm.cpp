@@ -81,4 +81,9 @@ bool FileExists (const std::string& name) {
         return false;
     }
 }
+
+std::string GetFileNameWithoutExtension(std::string filename){
+	//std::string basename=GetBaseName(filename);
+   	return GetStringToken_WithIndex(filename,'.');	
+}
 } // namespace ismran
