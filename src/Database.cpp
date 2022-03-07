@@ -5,16 +5,16 @@
 */
 
 #include "Database.h"
+#include "Helpers_Dqm.h"
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include "Helpers_Dqm.h"
 #ifdef EXPERIMENTAL_FILESYSTEM
 #include <experimental/filesystem>
-namespace FS=std::experimental::filesystem;
+namespace FS = std::experimental::filesystem;
 #else
 #include <filesystem>
-namespace FS=std::filesystem;
+namespace FS = std::filesystem;
 #endif
 
 namespace ismran {
@@ -225,7 +225,8 @@ std::vector<std::vector<std::string>> Database::GetVectorOfFiles_ForIntegrityChe
 std::vector<std::vector<std::string>> Database::GetVectorOfFiles_ForSinglePointCalibration() {
   std::vector<std::vector<std::string>> vecOfVecOfFileNames;
   Select("select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=0");
-  //Select("select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=0 and fileName like '%02Feb%' ");
+  // Select("select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=0
+  // and fileName like '%02Feb%' ");
   std::vector<std::string> vecOfFilePaths;
   std::vector<std::string> vecOfFileNames;
 
@@ -240,9 +241,30 @@ std::vector<std::vector<std::string>> Database::GetVectorOfFiles_ForSinglePointC
   return vecOfVecOfFileNames;
 }
 
+std::vector<std::vector<std::string>> Database::GetVectorOfFiles(std::string flagName) {
+  std::vector<std::vector<std::string>> vecOfVecOfFileNames;
+  std::string query = "select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=1 and "+flagName+"=0";
+//  Select("select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=0");
+  Select(query);
+  // Select("select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=0
+  // and fileName like '%02Feb%' ");
+  std::vector<std::string> vecOfFilePaths;
+  std::vector<std::string> vecOfFileNames;
+
+  while ((row = mysql_fetch_row(res)) != NULL) {
+    vecOfFilePaths.push_back(std::string(row[0]));
+    vecOfFileNames.push_back(std::string(row[1]));
+
+    // vecOfFileNames.push_back(std::string(row[0]) + "/" + std::string(row[1]));
+  }
+  vecOfVecOfFileNames.push_back(vecOfFilePaths);
+  vecOfVecOfFileNames.push_back(vecOfFileNames);
+  return vecOfVecOfFileNames;
+}
 void Database::DoIntegrityCheck(std::string targetPath, std::string fileToCheck) {
-  //std::string fullFilePath = targetPath + "/" + fileToCheck;
-  std::string fullFilePath = GetAmbarMountPoint_ParentDir()+GetPath_StartingFromMountPoint(targetPath)+"/"+fileToCheck;
+  // std::string fullFilePath = targetPath + "/" + fileToCheck;
+  std::string fullFilePath =
+      GetAmbarMountPoint_ParentDir() + GetPath_StartingFromMountPoint(targetPath) + "/" + fileToCheck;
   // std::cout << "File for Integrity check : " << fullFilePath << std::endl;
   system(("sha256sum " + fullFilePath + " > sha.txt").c_str());
   std::ifstream inHashFile("sha.txt");
@@ -254,8 +276,8 @@ void Database::DoIntegrityCheck(std::string targetPath, std::string fileToCheck)
 
   std::cout << "======================================" << std::endl;
   while ((row = mysql_fetch_row(res)) != NULL) {
-    //std::cout << "Updating integrity check for : " << fileToCheck << std::endl;
-    //std::cout << "Target Hash Code : " << hashCode << std::endl;
+    // std::cout << "Updating integrity check for : " << fileToCheck << std::endl;
+    // std::cout << "Target Hash Code : " << hashCode << std::endl;
     std::cout << "Hash Code from DB : " << std::string(row[0]) << std::endl;
     if (hashCode == std::string(row[0]) && hashCode != "") {
       query = "update ismran_files set integrityCheck=1 where fileName='" + fileToCheck + "'";
