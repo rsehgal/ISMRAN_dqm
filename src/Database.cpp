@@ -174,6 +174,28 @@ void Database::CalculateHashAndCopyFile(std::string sourcePath, std::string file
   inHashFile >> hashCode;
   inHashFile.close();
   system(("cp " + fullFilePath + " " + copyPath).c_str());
+
+  std::string fullImageTargetFilePath = GetCopyPath_UptoMonth(copyPath)+"/images";
+  std::string fullImageSourceFilePrefix=sourcePath+"/images/";
+  std::string imageFileSuffix = GetPath_StartingFrom_DelimiterWithIndex(fileToCopy,'_',1);
+  imageFileSuffix = GetStringToken_WithIndex(imageFileSuffix,'.',0); 
+  imageFileSuffix += ".png";
+  std::string imageName = "NearRate"+imageFileSuffix;
+  std::string fullImageSourceFilePath = fullImageSourceFilePrefix+imageName;
+
+  if(FileExists(fullImageSourceFilePath))  
+    system(("cp "+fullImageSourceFilePath+" "+fullImageTargetFilePath).c_str());
+
+  imageName = "FarRate"+imageFileSuffix;
+  fullImageSourceFilePath = fullImageSourceFilePrefix+imageName;
+  if(FileExists(fullImageSourceFilePath))  
+    system(("cp "+fullImageSourceFilePath+" "+fullImageTargetFilePath).c_str());
+
+  imageName = "CoincRate"+imageFileSuffix;
+  fullImageSourceFilePath = fullImageSourceFilePrefix+imageName;
+  if(FileExists(fullImageSourceFilePath))  
+    system(("cp "+fullImageSourceFilePath+" "+fullImageTargetFilePath).c_str());
+
   std::string query = "update ismran_files set copied=1 where fileName='" + fileToCopy + "'";
   Update(query);
   query = "update ismran_files set hashCode='" + hashCode + "' where fileName='" + fileToCopy + "'";
