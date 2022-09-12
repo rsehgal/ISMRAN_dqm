@@ -89,6 +89,7 @@ template <bool select> int Database::Query(std::string query) {
     // if (fVerbose)
     // PrintQueryOutput();
   }
+  return fQueryState;
 }
 
 } // namespace ismran
