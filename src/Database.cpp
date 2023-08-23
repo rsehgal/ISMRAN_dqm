@@ -241,9 +241,20 @@ std::vector<std::vector<std::string>> Database::GetVectorOfFiles_ForSinglePointC
   return vecOfVecOfFileNames;
 }
 
+std::vector<MYSQL_ROW> Database::GetVectorOfFiles_FromQuery(std::string query) {
+  std::cout <<  query << std::endl;
+  Select(query);
+  std::vector<MYSQL_ROW> vecOfMysqlRows;
+  while ((row = mysql_fetch_row(res)) != NULL) {
+	vecOfMysqlRows.push_back(row);
+  }
+  return vecOfMysqlRows;
+}
+
 std::vector<std::vector<std::string>> Database::GetVectorOfFiles(std::string flagName) {
   std::vector<std::vector<std::string>> vecOfVecOfFileNames;
-  std::string query = "select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=1 and "+flagName+"=0";
+  std::string query = "select remoteFilePath,fileName from ismran_files where "+flagName+"=0";
+  std::cout <<  query << std::endl;
 //  Select("select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=0");
   Select(query);
   // Select("select remoteFilePath,fileName from ismran_files where integrityCheck=1 and copied=1 and singlePointCalib=0

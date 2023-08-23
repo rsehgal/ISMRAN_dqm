@@ -43,7 +43,8 @@ public:
   void SetUname(char *uName);
   void SetPasswd(char *passWd);
 
-  template <bool select = false> int Query(std::string query);
+  template <bool select = false>
+  int Query(std::string query);
 
   int Insert(std::string query);
   int InsertFileNameAndPath(std::string filePath, std::string fileName);
@@ -60,22 +61,41 @@ public:
   std::vector<std::vector<std::string>> GetVectorOfFiles_ForIntegrityCheck();
   std::vector<std::vector<std::string>> GetVectorOfFiles_ForSinglePointCalibration();
   std::vector<std::vector<std::string>> GetVectorOfFiles(std::string flagName);
+  std::vector<MYSQL_ROW> GetVectorOfFiles_FromQuery(std::string query);
   void DoIntegrityCheck(std::string targetPath, std::string fileToChec);
   std::vector<std::vector<std::string>> GetVectorOfDeletedFiles();
   void UpdateDbForDeletedFile();
 
-
   std::string GetShaSum(std::string filename);
 
-  //Functions for offline processing for already existing files
+  // Functions for offline processing for already existing files
   void UpdateDbForFileNames_Offline(std::string sourceDir);
   void UpdateDbForTargetFiles_Cron_Offline(std::string sourceDir);
 
   // Function to set the fVERBOSE flag
   void SetVerbose(bool verbose);
+
+  // Function to get the row length
+  //NOT WORKING EXPECTEDLY
+  unsigned short GetMySqlRowLength(MYSQL_ROW row)
+  {
+    unsigned short length = 0;
+    // Iterate through the row until a NULL value is encountered
+    while (row[length] != NULL) {
+      length++;
+    }
+
+    return length;
+  }
 };
 
-template <bool select> int Database::Query(std::string query) {
+  unsigned short GetRowLength_FromQuery(std::string query){
+	
+
+  }
+template <bool select>
+int Database::Query(std::string query)
+{
 
   //	fQueryState = mysql_query(conn,fQuery.c_str());
   fQueryState = mysql_query(conn, query.c_str());
